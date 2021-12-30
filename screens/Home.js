@@ -11,35 +11,25 @@ import {
   Text,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
-import { NativeBaseProvider, Box, Center } from "native-base";
-import Constants from "expo-constants";
+import { Box, Center } from "native-base";
 import World from "../components/World";
 import Trending from "../components/Trending";
 import Following from "../components/Following";
 
-const SecondRoute = () => <Center flex={1}>This is Tab 2</Center>;
-
-const ThirdRoute = () => <Center flex={1}>This is Tab 3</Center>;
-
-const FourthRoute = () => <Center flex={1}>This is Tab 4 </Center>;
-
 const initialLayout = { width: Dimensions.get("window").width };
 
-const renderScene = SceneMap({
-  first: World,
-  second: Trending,
-  third: Following,
-  fourth: FourthRoute,
-});
-
-export default function Home() {
+export default function Home({ navigation }) {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "first", title: "world" },
     { key: "second", title: "Trending" },
     { key: "third", title: "Following" },
   ]);
-
+  const renderScene = SceneMap({
+    first: () => <World nav={() => navigation.navigate("profile")} />,
+    second: Trending,
+    third: Following,
+  });
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
     return (
@@ -64,7 +54,6 @@ export default function Home() {
             >
               <Pressable
                 onPress={() => {
-                  console.log(i);
                   setIndex(i);
                 }}
               >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -25,6 +25,7 @@ export default function Login({ navigation }) {
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem("name");
+      console.log(value);
       if (value !== null) {
         // value previously stored
         console.log(value);

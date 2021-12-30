@@ -8,9 +8,9 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { Flex, Box, Stack, Badge, Center } from "native-base";
+import { Flex, Box, Stack, Badge, Center, Button } from "native-base";
 import { SimpleLineIcons } from "@expo/vector-icons";
-export default function World() {
+export default function World({ nav }) {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Trending Categories</Text>
@@ -56,7 +56,12 @@ export default function World() {
                 </Flex>
               </Box>
               <Box>
-                <SimpleLineIcons name="options" size={24} color="#ADB3C0" />
+                <Button
+                  onPress={() => nav()}
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <SimpleLineIcons name="options" size={18} color="#ADB3C0" />
+                </Button>
               </Box>
             </Flex>
             <Stack style={{ marginTop: 15 }}>
