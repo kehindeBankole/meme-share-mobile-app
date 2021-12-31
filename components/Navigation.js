@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -10,7 +10,9 @@ import Discover from "../screens/Discover";
 import Profile from "../screens/Profile";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { Button, Stack, Box } from "native-base";
+import { Button, Stack, Box, Flex, Text } from "native-base";
+import { FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
 function Notifications({ navigation }) {
@@ -137,15 +139,6 @@ function Feed() {
 }
 function CustomDrawerContent({ navigation }) {
   return (
-    // <Button
-    //   style={{ marginTop: 50, paddingHorizontal: 50 }}
-    //   onPress={() => {
-    //     // Navigate using the `navigation` prop that you received
-    //     navigation.navigate("profile");
-    //   }}
-    // >
-    //   click
-    // </Button>
     <View>
       <Stack>
         <Image
@@ -161,7 +154,7 @@ function CustomDrawerContent({ navigation }) {
           style={{
             backgroundColor: "#252A32",
             height: 100,
-            paddingHorizontal: 10,
+            paddingHorizontal: 20,
           }}
         >
           <Image
@@ -174,6 +167,101 @@ function CustomDrawerContent({ navigation }) {
           </Box>
         </View>
       </Stack>
+      <Box
+        style={{
+          paddingHorizontal: 20,
+        }}
+        mt="2"
+      >
+        <TouchableOpacity
+          style={styles.menubutton}
+          onPress={() => {
+            navigation.navigate("profile");
+          }}
+        >
+          <Flex direction="row">
+            <FontAwesome name="user-circle-o" size={24} color="#ADB3C0" />
+            <Text
+              style={{
+                ...styles.atname,
+                fontFamily: "Inter_600SemiBold",
+                marginLeft: 10,
+                fontSize: 13,
+                textTransform: "capitalize",
+              }}
+            >
+              my profile
+            </Text>
+          </Flex>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menubutton}>
+          <Flex direction="row">
+            <Feather name="settings" size={24} color="#ADB3C0" />
+            <Text
+              style={{
+                ...styles.atname,
+                fontFamily: "Inter_600SemiBold",
+                marginLeft: 10,
+                fontSize: 13,
+                textTransform: "capitalize",
+              }}
+            >
+              settings
+            </Text>
+          </Flex>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menubutton}>
+          <Flex direction="row">
+            <Feather name="message-square" size={24} color="#ADB3C0" />
+            <Text
+              style={{
+                ...styles.atname,
+                fontFamily: "Inter_600SemiBold",
+                marginLeft: 10,
+                fontSize: 13,
+                textTransform: "capitalize",
+              }}
+            >
+              give feedback
+            </Text>
+          </Flex>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menubutton}>
+          <Flex direction="row">
+            <AntDesign name="addusergroup" size={24} color="#ADB3C0" />
+            <Text
+              style={{
+                ...styles.atname,
+                fontFamily: "Inter_600SemiBold",
+                marginLeft: 10,
+                fontSize: 13,
+                textTransform: "capitalize",
+              }}
+            >
+              invite a friend
+            </Text>
+          </Flex>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menubutton}>
+          <Flex direction="row">
+            <AntDesign name="logout" size={24} color="#ADB3C0" />
+            <Text
+              style={{
+                ...styles.atname,
+                fontFamily: "Inter_600SemiBold",
+                marginLeft: 10,
+                fontSize: 13,
+                textTransform: "capitalize",
+              }}
+            >
+              logout
+            </Text>
+          </Flex>
+        </TouchableOpacity>
+      </Box>
     </View>
   );
 }
@@ -184,8 +272,18 @@ export function MyDrawer() {
     >
       <Drawer.Screen
         options={{
-          headerShown: false,
-          drawerLabel: false,
+          headerTitleStyle: { color: "white", fontFamily: "Inter_900Black" },
+          headerStyle: { backgroundColor: "#0C0E13" },
+          headerShadowVisible: true,
+          headerTintColor: "white",
+          drawerIcon: ({ focused, size, color }) => (
+            <View>
+              <Image
+                source={require("../assets/zero.jpeg")}
+                style={{ width: size, height: size, borderRadius: 17 }}
+              />
+            </View>
+          ),
           drawerStyle: {
             backgroundColor: "#0C0E13",
             width: 240,
@@ -193,7 +291,7 @@ export function MyDrawer() {
             borderRightColor: "#21282D",
           },
         }}
-        name="Art"
+        name="YouMeme"
         component={Navigation}
       />
     </Drawer.Navigator>
@@ -231,5 +329,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 10,
     fontFamily: "Inter_700Bold",
+  },
+  menubutton: {
+    marginTop: 30,
   },
 });

@@ -82,7 +82,7 @@ export default function Home({ navigation }) {
         renderTabBar={renderTabBar}
         onIndexChange={setIndex}
         initialLayout={initialLayout}
-        style={{ marginTop: StatusBar.currentHeight }}
+        style={{ marginTop: -StatusBar.currentHeight }}
         indicatorStyle={{ backgroundColor: "white" }}
       />
     </View>
