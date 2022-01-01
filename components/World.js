@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,12 +7,32 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  SafeAreaView,
 } from "react-native";
-import { Flex, Box, Stack, Badge, Center, Button } from "native-base";
+import {
+  Flex,
+  Box,
+  Stack,
+  Badge,
+  Center,
+  Button,
+  Spinner,
+  HStack,
+  Heading,
+} from "native-base";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import { useFetch } from "../hooks/useFetch";
 export default function World({ nav }) {
+  const [limit, setLimit] = useState(20);
+  const [loading, setLoading] = useState(false);
+  const [s, data] = useFetch(
+    `https://youmeme-demo.herokuapp.com/api/post?limit=${limit}`
+  );
+  const loadMore = () => {
+    setLimit(limit + 20);
+  };
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Trending Categories</Text>
       <FlatList
         data={[
@@ -35,68 +55,98 @@ export default function World({ nav }) {
         keyExtractor={(item) => item.id}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        style={{ paddingLeft: 15 }}
+        style={{ paddingLeft: 15, flex: 2 }}
       />
 
-      <FlatList
-        data={[1, 2, 3, 45]}
-        renderItem={() => (
-          <View style={{ paddingHorizontal: 15, marginTop: 25 }}>
-            <Flex direction="row" justifyContent="space-between">
-              <Box>
-                <Flex direction="row">
-                  <Image
-                    source={require("../assets/zero.jpeg")}
-                    style={{ width: 40, height: 40, borderRadius: 17 }}
-                  />
-                  <Box ml="2">
-                    <Text style={styles.username}>kehinde</Text>
-                    <Text style={styles.atname}>@grandmaster</Text>
+      <View style={{ flex: 4, marginTop: 20 }}>
+        {data && (
+          <FlatList
+            removeClippedSubviews={true}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0}
+            scrollEnabled={true}
+            ListFooterComponent={
+              <Center flex={1} px="3" mt="5">
+                <HStack space={2} alignItems="center">
+                  <Spinner accessibilityLabel="Loading posts" size="lg" />
+                </HStack>
+              </Center>
+            }
+            data={data.data}
+            renderItem={({ item }) => (
+              <View style={{ paddingHorizontal: 15, marginTop: 25 }}>
+                <Flex direction="row" justifyContent="space-between">
+                  <Box>
+                    <Flex direction="row">
+                      <Image
+                        source={{
+                          uri: item.user.avatar
+                            ? `https://youmeme.herokuapp.com/api/image${item.user.avatar.urlImage}`
+                            : "https://youmeme.netlify.app/profile.png",
+                        }}
+                        style={{ width: 40, height: 40, borderRadius: 17 }}
+                      />
+                      <Box ml="2">
+                        <Text style={styles.username}>
+                          {item.user.username}
+                        </Text>
+                        <Text style={styles.atname}>
+                          @{item.user.displayName}
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Box>
+                  <Box>
+                    <Button
+                      onPress={() => nav()}
+                      style={{ backgroundColor: "transparent" }}
+                    >
+                      <SimpleLineIcons
+                        name="options"
+                        size={18}
+                        color="#ADB3C0"
+                      />
+                    </Button>
                   </Box>
                 </Flex>
-              </Box>
-              <Box>
-                <Button
-                  onPress={() => nav()}
-                  style={{ backgroundColor: "transparent" }}
-                >
-                  <SimpleLineIcons name="options" size={18} color="#ADB3C0" />
-                </Button>
-              </Box>
-            </Flex>
-            <Stack style={{ marginTop: 15 }}>
-              <Text style={styles.memeTitle}>Tokyo revenger meme</Text>
-              <Image
-                source={require("../assets/meme1.png")}
-                style={{
-                  width: "auto",
-                  height: 200,
-                  borderRadius: 7,
-                  marginTop: 10,
-                }}
-              />
-              <Flex direction="row" mt="3">
-                <Badge borderRadius="5" style={styles.tags}>
-                  <Center>
-                    <Text style={styles.tagname}> anime</Text>
-                  </Center>
-                </Badge>
-                <Badge borderRadius="5" style={styles.tags}>
-                  <Text style={styles.tagname}>toman</Text>
-                </Badge>
-                <Badge borderRadius="5" style={styles.tags}>
-                  <Text style={styles.tagname}>draken</Text>
-                </Badge>
-                <Badge borderRadius="5" style={styles.tags}>
-                  <Text style={styles.tagname}> anime</Text>
-                </Badge>
-              </Flex>
-            </Stack>
-          </View>
+                <Stack style={{ marginTop: 15 }}>
+                  <Text style={styles.memeTitle}>{item.title}</Text>
+                  <Image
+                    source={{
+                      uri: `https://youmeme.herokuapp.com/api/image${item.meme.renderedImage.urlImage}`,
+                    }}
+                    style={{
+                      width: "auto",
+                      height: 300,
+                      borderRadius: 7,
+                      marginTop: 10,
+                      resizeMode: "contain",
+                    }}
+                  />
+                  <Flex direction="row" mt="3">
+                    <Badge borderRadius="5" style={styles.tags}>
+                      <Center>
+                        <Text style={styles.tagname}> anime</Text>
+                      </Center>
+                    </Badge>
+                    <Badge borderRadius="5" style={styles.tags}>
+                      <Text style={styles.tagname}>toman</Text>
+                    </Badge>
+                    <Badge borderRadius="5" style={styles.tags}>
+                      <Text style={styles.tagname}>draken</Text>
+                    </Badge>
+                    <Badge borderRadius="5" style={styles.tags}>
+                      <Text style={styles.tagname}> anime</Text>
+                    </Badge>
+                  </Flex>
+                </Stack>
+              </View>
+            )}
+            style={{ flex: 1 }}
+          />
         )}
-        style={{ marginBottom: 40 }}
-      />
-    </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -105,6 +155,7 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     height: Dimensions.get("window").height,
     flex: 1,
+    flexDirection: "column",
   },
   title: {
     color: "#FFFFFF",
