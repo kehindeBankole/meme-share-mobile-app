@@ -84,7 +84,17 @@ export function Navigation() {
         options={{
           tabBarLabel: "Standings",
           tabBarIcon: ({ focused }) => (
-            <View style={{ justifyContent: "center" }}>
+            <View
+              style={{
+                justifyContent: "center",
+                padding: 5,
+                borderRadius: 100,
+                borderColor: "#35a6eb",
+                borderWidth: 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <AntDesign name="pluscircle" size={24} color="#35a6eb" />
             </View>
           ),
