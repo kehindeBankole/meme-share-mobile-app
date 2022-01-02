@@ -43,7 +43,7 @@ export default function App() {
     return (
       <NativeBaseProvider>
         <NavigationContainer>
-          <StatusBar animated={true} backgroundColor="#61dafb" />
+          <StatusBar animated={true} backgroundColor="white" />
           <Stack.Navigator>
             <Stack.Screen
               name="Login"

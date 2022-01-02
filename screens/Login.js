@@ -10,11 +10,12 @@ import { Input, Stack, Button, Center } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Login({ navigation }) {
   const [text, setText] = useState("");
-  const storeData = async () => {
+  const getData = async () => {
     try {
       await AsyncStorage.setItem("name", `${text}`);
       if (AsyncStorage.getItem("name") !== null) {
         navigation.navigate("Root");
+        setText("");
       }
     } catch (error) {
       // Error saving data
@@ -22,7 +23,7 @@ export default function Login({ navigation }) {
     }
   };
 
-  const getData = async () => {
+  const storeData = async () => {
     try {
       const value = await AsyncStorage.getItem("name");
       console.log(value);
@@ -61,7 +62,16 @@ export default function Login({ navigation }) {
             pl="5"
             onChangeText={(text) => setText(text)}
           />
-          <Button mt="4" borderRadius="5" onPress={() => getData()}>
+          <Button
+            mt="4"
+            borderRadius="5"
+            onPress={() => getData()}
+            disabled={
+              text.length >= 6 && AsyncStorage.getItem("name") !== null
+                ? false
+                : true
+            }
+          >
             <Text style={styles.buttonText}> Sign in</Text>
           </Button>
           <Center>
