@@ -48,7 +48,12 @@ export default function Profile() {
           <Box>
             <Text style={{ ...styles.username, fontSize: 16 }}>1263</Text>
             <Text
-              style={{ ...styles.displayname, fontFamily: "Inter_600SemiBold" }}
+              style={{
+                ...styles.displayname,
+                fontFamily: "Inter_600SemiBold",
+                textTransform: "uppercase",
+                fontSize: 10,
+              }}
             >
               following
             </Text>
@@ -57,7 +62,12 @@ export default function Profile() {
           <Box>
             <Text style={{ ...styles.username, fontSize: 16 }}>450.k</Text>
             <Text
-              style={{ ...styles.displayname, fontFamily: "Inter_600SemiBold" }}
+              style={{
+                ...styles.displayname,
+                fontFamily: "Inter_600SemiBold",
+                textTransform: "uppercase",
+                fontSize: 10,
+              }}
             >
               follower
             </Text>
@@ -66,7 +76,12 @@ export default function Profile() {
           <Box>
             <Text style={{ ...styles.username, fontSize: 16 }}>21.3</Text>
             <Text
-              style={{ ...styles.displayname, fontFamily: "Inter_600SemiBold" }}
+              style={{
+                ...styles.displayname,
+                fontFamily: "Inter_600SemiBold",
+                textTransform: "uppercase",
+                fontSize: 10,
+              }}
             >
               posts
             </Text>
