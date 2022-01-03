@@ -8,20 +8,13 @@ import { AntDesign } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Discover from "../screens/Discover";
 import Profile from "../screens/Profile";
+import Notifications from "../screens/Notifications";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Button, Stack, Box, Flex, Text } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
-
-function Notifications({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Notifications!</Text>
-    </View>
-  );
-}
 
 function Article() {
   return (
